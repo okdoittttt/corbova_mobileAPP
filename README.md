@@ -39,28 +39,118 @@ mkdir hybridapp
 
 ### 단계 4. 안드로이드 플랫폼 패키지 추가 설치하기
 안드로이드 스튜디오를 실행한 후 Tools - SDK Manager 오픈 후 아래 설정을 해주도록 한다.
+
 Android SDK Tools
+
 Android SDK Platfor-tools
+
 Android SDK Build-tools
+
 Android R(Api 29, R preview)
+
 SDK Platform
+
 Android R Preview
+
 Google Play Intel x86 Atom_64_System Image
+
 Google APIs intel x86 Atom_64_System Image
 
+
 Android Support Repository
+
 Android Auto Desktop head unit emulator
+
 Android auto API simulator
+
 Google Repository
+
 Google USB Driver
+
 Google Play Services
+
 Android SDK Command-line Tools
+
 Intel x86 Emulator Accelerator(HAXM installer)
 
 ### 단계 5. 환경변수 설정하기
 <pre>
 <code>
 $ /Library/Java/JavaVirtualMachines/{jdk.version}/Contents/Home
-
 </code>
 </pre>
+
+### 단계 6. Node.js 설치, 코르도바 설치
+<pre>
+<code>
+# HOMEBREW
+export PATH="/opt/homebrew/bin:$PATH"
+$ brew update
+$ brew install nvm
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+$ nvm -v
+
+# 다운로드 받고자 하는 node.js 버전 입력
+nvm install 17.2.0
+$ npm install -g phonegap
+$ npm install -g cordova
+$ cordova -v
+$ npm update -g phonegap
+$ npm update -g cordova
+
+
+# 코르도바 프로젝트 생성하기(작업폴더에서 실행)
+cordova create test com.example.test testApp -d
+cordova platform add android
+</code>
+</pre>
+
+### 단계 7. 안드로이드 스튜디오에 설정 변경하기
+build.gradle(:app)
+<pre>
+<code>
+packagingOptions {
+
+        exclude 'META-INF/DEPENDENCIES.txt'
+
+        exclude 'META-INF/LICENSE.txt'
+
+        exclude 'META-INF/NOTICE.txt'
+
+        exclude 'META-INF/NOTICE'
+
+        exclude 'META-INF/LICENSE'
+
+        exclude 'META-INF/DEPENDENCIES'
+
+        exclude 'META-INF/notice.txt'
+
+        exclude 'META-INF/license.txt'
+
+        exclude 'META-INF/dependencies.txt'
+
+        exclude 'META-INF/LGPL2.1'
+
+    }
+</code>
+</pre>
+
+AndroidManifest.xml
+<pre>
+<code>
+android:largeHeap="true"
+</code>
+</pre>
+
+### 단계 8. 실행 확인
+아래 명령어를 입력해 실행시키기
+<pre>
+<code>
+cordova emulate android
+</code>
+</pre>
+![실행확인](/image.png)
